@@ -5,8 +5,8 @@ fn main() {
     // Set up the CLI parser
     let matches = App::new("Redactor")
         .version("1.0")
-        .author("Author: Zackary Troop")
-        .about("Description: Redact all the things!")
+        .author("Author: Zackary Troop <zackary.troop@outlook.com>")
+        .about("Description: A utility to redact strings")
         .arg(Arg::with_name("input")
             .help("The string to redact")
             .required(true)
