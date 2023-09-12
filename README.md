@@ -1,3 +1,5 @@
+[![Rust](https://github.com/ztroop/redactor/actions/workflows/ci.yml/badge.svg)](https://github.com/ztroop/redactor/actions/workflows/ci.yml)
+
 # Redactor
 
 The String Redactor is a CLI tool written in Rust. It takes a string input and redacts the characters based on the options provided. You can configure the length to redact, the redaction character, characters to ignore, and specify if you want to ignore redaction on the first or last `X` number of characters.

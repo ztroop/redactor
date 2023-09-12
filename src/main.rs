@@ -70,7 +70,28 @@ fn main() {
         .map_or(0, |v| v.parse::<usize>().unwrap_or(0));
 
     // Do the redaction
-    let redacted_str: String = input
+    let redacted_str: String = redact(
+        &input,
+        length,
+        redact_char,
+        ignore_char,
+        ignore_last,
+        ignore_first,
+    );
+
+    // Print the redacted string
+    println!("{redacted_str}");
+}
+
+fn redact(
+    input: &str,
+    length: usize,
+    redact_char: char,
+    ignore_char: Option<char>,
+    ignore_last: usize,
+    ignore_first: usize,
+) -> String {
+    input
         .chars()
         .enumerate()
         .map(|(i, c)| {
@@ -78,14 +99,58 @@ fn main() {
                 c
             } else if Some(c) == ignore_char {
                 c
-            } else if i < length {
+            } else if i >= ignore_first && i < ignore_first + length {
                 redact_char
             } else {
                 c
             }
         })
-        .collect();
+        .collect()
+}
 
-    // Print the redacted string
-    println!("{}", redacted_str);
+#[cfg(test)]
+mod tests {
+    use super::redact;
+
+    #[test]
+    fn test_redact_full_length() {
+        let result = redact("abcdef", 6, '*', None, 0, 0);
+        assert_eq!(result, "******");
+    }
+
+    #[test]
+    fn test_redact_partial_length() {
+        let result = redact("abcdef", 3, '*', None, 0, 0);
+        assert_eq!(result, "***def");
+    }
+
+    #[test]
+    fn test_redact_ignore_first() {
+        let result = redact("abcdef", 6, '*', None, 0, 2);
+        assert_eq!(result, "ab****");
+    }
+
+    #[test]
+    fn test_redact_ignore_last() {
+        let result = redact("abcdef", 6, '*', None, 2, 0);
+        assert_eq!(result, "****ef");
+    }
+
+    #[test]
+    fn test_redact_ignore_char() {
+        let result = redact("abcdef", 6, '*', Some('c'), 0, 0);
+        assert_eq!(result, "**c***");
+    }
+
+    #[test]
+    fn test_redact_empty_string() {
+        let result = redact("", 6, '*', None, 0, 0);
+        assert_eq!(result, "");
+    }
+
+    #[test]
+    fn test_redact_ignore_first_and_last() {
+        let result = redact("abcdef", 4, '*', None, 1, 1);
+        assert_eq!(result, "a****f");
+    }
 }
