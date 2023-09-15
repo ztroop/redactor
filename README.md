@@ -40,7 +40,6 @@ redactor [FLAGS] [OPTIONS] <input_string>
 
 ### Options
 
-- `-l, --length <length>`: Specify the length to redact. If not provided, the full length of the string will be used.
 - `-r, --redact-char <char>`: Character to use for redaction. The default is '\*'.
 - `-i, --ignore-char <char>`: Character to ignore during redaction.
 - `-e, --ignore-last <number>`: Ignore the last X characters from redaction.
@@ -52,12 +51,6 @@ redactor [FLAGS] [OPTIONS] <input_string>
 
   ```bash
   redactor hello
-  ```
-
-- To redact the string "hello" but only the first 3 characters:
-
-  ```bash
-  redactor hello -l 3
   ```
 
 - To redact the string "hello" but use `#` as the redaction character:
@@ -83,7 +76,3 @@ redactor [FLAGS] [OPTIONS] <input_string>
   ```bash
   redactor hello -f 2
   ```
-
-## License
-
-This project is licensed under the MIT License.
